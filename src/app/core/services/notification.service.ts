@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export interface NotificationItem {
   id: number;
@@ -15,9 +15,16 @@ export class NotificationService {
 
   constructor(private http: HttpClient) {}
 
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('jwt');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
+
   async fetchUnread(): Promise<NotificationItem[]> {
     try {
-      const list = await this.http.get<NotificationItem[]>('/api/notifications/unread').toPromise();
+      const list = await this.http.get<NotificationItem[]>('/api/notifications/unread', { headers: this.getHeaders() }).toPromise();
       this._unread.set(list ?? []);
       return this._unread();
     } catch (e) {
@@ -29,7 +36,7 @@ export class NotificationService {
 
   async markAllRead(): Promise<void> {
     try {
-      await this.http.post('/api/notifications/mark-read', {}).toPromise();
+      await this.http.post('/api/notifications/mark-read', {}, { headers: this.getHeaders() }).toPromise();
       this._unread.set([]);
     } catch (e) {
       console.error('Failed to mark notifications read', e);

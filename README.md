@@ -1,24 +1,59 @@
 # Tesko Frontend (Angular 20)
 
-This is the Angular 20 SPA for Tesko. It uses standalone components and the new build system.
+This is the Angular 20 SPA for Tesko, a Test Data Management System. It provides a modern, responsive interface for managing telecom test assets with real-time updates.
+
+## Features
+- **Authentication:** JWT-based login with role-based access control
+- **Dashboard:** Real-time metrics and charts for asset management
+- **User Management:** Admin interface for CRUD operations on users
+- **Asset Management:** Inventory tracking with create/edit/delete functionality
+- **Request System:** Submit and approve asset requests with SignalR notifications
+- **Responsive Design:** Bootstrap 5 with modern sidebar navigation
+- **Real-Time Updates:** Live notifications and dashboard updates via SignalR
 
 ## Prerequisites
 - Node.js 18.x or 20.x LTS (recommended)
 - npm 9.x or 10.x
+- .NET 10 SDK (for backend API)
 
 ## Setup & Run
+
+### Development Mode (Recommended)
+1. **Install dependencies:**
+   ```bash
+   npm ci
+   ```
+
+2. **Start the Angular dev server:**
+   ```bash
+   npm start
+   ```
+   The app will run at `http://localhost:4200` and proxy API calls to `http://localhost:5283`.
+
+3. **Start the backend API:**
+   ```bash
+   cd ../Tesko
+   dotnet run
+   ```
+
+### Production Build
 ```bash
-npm ci        # install dependencies exactly as locked
-npm start     # run the dev server (http://localhost:4200)
-npm run build # create a production build
-npm test      # run unit tests (if present)
+npm run build
 ```
+Copy the `dist/tesko-frontend` folder to the backend's `wwwroot` and configure ASP.NET Core to serve static files.
+
+## Architecture
+- **Standalone Components:** Modern Angular 20 architecture with no NgModules
+- **Reactive Signals:** State management using Angular signals
+- **Services:** HttpClient-based services for API communication
+- **Routing:** Lazy-loaded feature modules
+- **Proxy Configuration:** Development proxy for seamless API integration
 
 ## Migration/Upgrade Notes
 See `MIGRATE-ANGULAR-20.md` for full migration steps, troubleshooting, and rollback guidance.
 
-## SignalR
-If you use SignalR in the SPA, import from `@microsoft/signalr` and connect to `/dashboardHub`.
+## SignalR Integration
+Connects to `/hubs/dashboard` for real-time updates on requests and notifications.
 
 ## Node Version Pinning
 This project recommends Node >=18 <23. You can add this to `package.json`:
@@ -27,27 +62,7 @@ This project recommends Node >=18 <23. You can add this to `package.json`:
 ```
 
 ---
-Last updated: 2025-11-26
-# TeskoFrontend
-
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.12.
-
-## Development server
-
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+Last updated: 2025-11-27
 ```
 
 For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
