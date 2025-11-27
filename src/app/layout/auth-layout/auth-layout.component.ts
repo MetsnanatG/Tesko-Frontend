@@ -6,19 +6,14 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [RouterOutlet],
   template: `
-    <div class="auth-shell">
-      <header class="auth-header">
-        <div class="brand">Tesko</div>
+    <div class="min-h-screen flex flex-col bg-gray-50">
+      <header class="py-6 text-center text-3xl font-bold text-blue-800">
+        <div>Tesko</div>
       </header>
-      <main class="auth-content">
+      <main class="flex-1 flex items-center justify-center">
         <router-outlet></router-outlet>
       </main>
     </div>
-  `,
-  styles: [
-    `.auth-shell { min-height: 100vh; display: flex; flex-direction: column; background: #f8fafc; }
-     .auth-header { padding: 24px 0; text-align: center; font-size: 2rem; font-weight: 700; color: #1e40af; }
-     .auth-content { flex: 1; display: flex; align-items: center; justify-content: center; }`
-  ]
+  `
 })
 export class AuthLayoutComponent {}

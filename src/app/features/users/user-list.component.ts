@@ -9,63 +9,60 @@ import { User } from '../../models/user.model';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <section class="user-list">
-      <h2>User Management</h2>
-      <button class="btn btn-primary mb-3" (click)="showCreateForm = true" *ngIf="!showCreateForm">Add User</button>
-      <div *ngIf="showCreateForm" class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">Create New User</h5>
-          <form (ngSubmit)="createUser()">
-            <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" [(ngModel)]="newUser.name" name="name" required>
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" [(ngModel)]="newUser.email" name="email" required>
-            </div>
-            <div class="mb-3">
-              <label for="role" class="form-label">Role</label>
-              <select class="form-control" id="role" [(ngModel)]="newUser.role" name="role" required>
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-success">Create</button>
-            <button type="button" class="btn btn-secondary ms-2" (click)="cancelCreate()">Cancel</button>
-          </form>
-        </div>
+    <section class="p-6">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">User Management</h2>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors mb-6" (click)="showCreateForm = true" *ngIf="!showCreateForm">Add User</button>
+      <div *ngIf="showCreateForm" class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h5 class="text-xl font-semibold text-gray-800 mb-4">Create New User</h5>
+        <form (ngSubmit)="createUser()" class="space-y-4">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+            <input type="text" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="name" [(ngModel)]="newUser.name" name="name" required>
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="email" [(ngModel)]="newUser.email" name="email" required>
+          </div>
+          <div>
+            <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+            <select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="role" [(ngModel)]="newUser.role" name="role" required>
+              <option value="User">User</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+          <div class="flex gap-2">
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">Create</button>
+            <button type="button" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors" (click)="cancelCreate()">Cancel</button>
+          </div>
+        </form>
       </div>
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Actions</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="bg-white divide-y divide-gray-200">
             <tr *ngFor="let user of users">
-              <td>{{ user.id }}</td>
-              <td>{{ user.name }}</td>
-              <td>{{ user.email }}</td>
-              <td>{{ user.role }}</td>
-              <td>
-                <button class="btn btn-sm btn-warning me-2" (click)="editUser(user)">Edit</button>
-                <button class="btn btn-sm btn-danger" (click)="deleteUser(user.id)">Delete</button>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ user.id }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ user.name }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ user.email }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ user.role }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <button class="text-yellow-600 hover:text-yellow-900 mr-2" (click)="editUser(user)">Edit</button>
+                <button class="text-red-600 hover:text-red-900" (click)="deleteUser(user.id)">Delete</button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
-  `,
-  styles: [
-    `.user-list { padding: 24px; }`
-  ]
+  `
 })
 export class UserListComponent implements OnInit {
   users: User[] = [];
