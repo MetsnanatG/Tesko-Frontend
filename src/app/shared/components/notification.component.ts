@@ -7,42 +7,31 @@ import { NotificationService } from '../../core/services/notification.service';
   standalone: true,
   imports: [CommonModule],
   template: `
-  <div class="notif-root" aria-live="polite">
-    <button class="bell" (click)="toggle()" aria-label="Notifications">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M12 24c1.1046 0 2-.8954 2-2h-4c0 1.1046.8954 2 2 2zm6.364-6v-5c0-3.07-1.635-5.64-4.364-6.32V5a2 2 0 10-4 0v1.68C6.271 7.36 4.636 9.93 4.636 13v5l-1.636 1v1h18v-1l-1.636-1z"/>
+  <div class="relative">
+    <button class="relative p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="toggle()" aria-label="Notifications">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
       </svg>
-      <span class="badge" *ngIf="unreadCount() > 0">{{ unreadCount() }}</span>
+      <span class="absolute top-1 right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-600 rounded-full" *ngIf="unreadCount() > 0">{{ unreadCount() }}</span>
     </button>
 
-    <div class="dropdown" *ngIf="open()">
-      <div class="header">Notifications</div>
-      <div class="list">
-        <div *ngIf="unreadCount() === 0" class="empty">No new notifications</div>
-        <div *ngFor="let n of unread()" class="item">
-          <div class="title">{{ n.title }}</div>
-          <div class="message">{{ n.message }}</div>
-          <div class="ts">{{ n.timestamp }}</div>
+    <div class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl overflow-hidden z-50 border border-gray-200 origin-top-right transition-all duration-200 ease-out" *ngIf="open()">
+      <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 font-semibold text-gray-700 flex justify-between items-center">
+        <span>Notifications</span>
+        <span class="text-xs font-normal text-gray-500" *ngIf="unreadCount() > 0">{{ unreadCount() }} new</span>
+      </div>
+      <div class="max-h-80 overflow-y-auto">
+        <div *ngIf="unreadCount() === 0" class="p-6 text-center text-gray-500 text-sm">No new notifications</div>
+        <div *ngFor="let n of unread()" class="p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors last:border-0">
+          <div class="font-medium text-gray-900 text-sm mb-1">{{ n.title }}</div>
+          <div class="text-sm text-gray-600 mb-2">{{ n.message }}</div>
+          <div class="text-xs text-gray-400">{{ n.timestamp }}</div>
         </div>
       </div>
     </div>
   </div>
-  `,
-  styles: [
-    `:host { position: relative; }
-    .notif-root { position: relative; display: inline-block; }
-    .bell { background: transparent; border: none; position: relative; cursor: pointer; }
-    .badge { position: absolute; top: -6px; right: -6px; background: #e11; color: white; border-radius: 999px; padding: 2px 6px; font-size: 11px; font-weight: 600; }
-    .dropdown { position: absolute; top: 32px; right: 0; width: 320px; background: white; box-shadow: 0 6px 18px rgba(0,0,0,0.12); border-radius: 8px; overflow: hidden; z-index: 100; }
-    .header { padding: 8px 12px; font-weight: 700; border-bottom: 1px solid #eee; }
-    .list { max-height: 320px; overflow: auto; }
-    .item { padding: 8px 12px; border-bottom: 1px solid #f5f5f5; }
-    .title { font-weight: 600; }
-    .message { color: #444; }
-    .ts { font-size: 11px; color: #888; margin-top: 6px; }
-    .empty { padding: 12px; color: #666; }
-    `
-  ]
+  `
 })
 export class NotificationComponent {
   unread = signal<Array<any>>([]);

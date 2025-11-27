@@ -1,3 +1,9 @@
+export type { Asset } from './asset.model';
+export type { User } from './user.model';
+
+import { Asset } from './asset.model';
+import { User } from './user.model';
+
 export interface Request {
   id: number;
   purpose: string;
@@ -10,20 +16,4 @@ export interface Request {
   requestDate: Date;
   actionDate?: Date;
   comment?: string;
-}
-
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-}
-
-export interface Asset {
-  id: number;
-  name: string;
-  description: string;
-  category: string;
-  status: string;
-  location: string;
 }

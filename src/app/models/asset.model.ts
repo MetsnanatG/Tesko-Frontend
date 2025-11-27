@@ -1,8 +1,11 @@
 export interface Asset {
   id: number;
   name: string;
+  type: string;
   description: string;
-  category: string;
-  status: string;
-  location: string;
+  totalStock: number;
+  availableStock: number;
+  allocatedStock: number;
+  defectiveStock: number;
+  lowStockThreshold: number;
 }
