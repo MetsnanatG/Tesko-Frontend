@@ -1,3 +1,33 @@
+# Tesko Frontend (Angular 20)
+
+This is the Angular 20 SPA for Tesko. It uses standalone components and the new build system.
+
+## Prerequisites
+- Node.js 18.x or 20.x LTS (recommended)
+- npm 9.x or 10.x
+
+## Setup & Run
+```bash
+npm ci        # install dependencies exactly as locked
+npm start     # run the dev server (http://localhost:4200)
+npm run build # create a production build
+npm test      # run unit tests (if present)
+```
+
+## Migration/Upgrade Notes
+See `MIGRATE-ANGULAR-20.md` for full migration steps, troubleshooting, and rollback guidance.
+
+## SignalR
+If you use SignalR in the SPA, import from `@microsoft/signalr` and connect to `/dashboardHub`.
+
+## Node Version Pinning
+This project recommends Node >=18 <23. You can add this to `package.json`:
+```json
+"engines": { "node": ">=18 <23" }
+```
+
+---
+Last updated: 2025-11-26
 # TeskoFrontend
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.12.
